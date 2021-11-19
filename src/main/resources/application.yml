@@ -1,0 +1,69 @@
+# 开发环境配置
+server:
+  # 服务器的HTTP端口
+  port: 8088
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  # tomcat 配置
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+  # undertow 配置
+  undertow:
+    # HTTP post内容的最大大小。当值为-1时，默认值为大小是无限的
+    max-http-post-size: -1
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分
+    buffer-size: 512
+    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+    io-threads: 8
+    # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+    worker-threads: 256
+    # 是否分配的直接内存
+    direct-buffers: true
+
+# Spring配置
+spring:
+  # 指定加载其他配置文件
+  profiles:
+    # 多个使用英文逗号分隔
+    active: druid
+  # 资源配置
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  # 文件上传
+  servlet:
+    multipart:
+      enabled: true
+      # 单个文件大小
+      max-file-size: 1024MB
+      # 设置总上传的文件大小
+      max-request-size: 2048MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: secret
+  # 令牌有效期，单位分钟
+  expireTime: 2
+
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名，多个使用英文逗号分隔
+  typeAliasesPackage: com.zq.**.model
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper*.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml

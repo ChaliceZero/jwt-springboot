@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zq.jwt.dao.SysUserDao">
+    <resultMap id="sysUser" type="com.zq.jwt.model.SysUser">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="password" property="password"/>
+            <result column="age" property="age"/>
+            <result column="createDate" property="create_date"/>
+            <result column="updateDate" property="update_date"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`username` ,`password` ,`age` ,`create_date` ,`update_date`
+    </sql>
+
+    <insert id="insert">
+        insert into `sys_user`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                `id`,
+            </if>
+            <if test="username != null and username != ''">
+                `username`,
+            </if>
+            <if test="password != null and password != ''">
+                `password`,
+            </if>
+            <if test="age != null and age != ''">
+                `age`,
+            </if>
+            <if test="createDate != null and createDate != ''">
+                `create_date`,
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                `update_date`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+            #{id} ,
+            </if>
+            <if test="username != null and username != ''">
+            #{username} ,
+            </if>
+            <if test="password != null and password != ''">
+            #{password} ,
+            </if>
+            <if test="age != null and age != ''">
+            #{age} ,
+            </if>
+            <if test="createDate != null and createDate != ''">
+            #{createDate} ,
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+            #{updateDate} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `sys_user`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null and id != ''">
+                and `id` = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and `username` = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                and `password` = #{password}
+            </if>
+            <if test="age != null and age != ''">
+                and `age` = #{age}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and `create_date` = #{createDate}
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                and `update_date` = #{updateDate}
+            </if>
+        </trim>
+    </delete>
+
+    <update id="update">
+        update `sys_user`
+        <set>
+                <if test="username != null and username != ''">
+                    `username` = #{username},
+                </if>
+                <if test="password != null and password != ''">
+                    `password` = #{password},
+                </if>
+                <if test="age != null and age != ''">
+                    `age` = #{age},
+                </if>
+                <if test="createDate != null and createDate != ''">
+                    `create_date` = #{createDate},
+                </if>
+                <if test="updateDate != null and updateDate != ''">
+                    `update_date` = #{updateDate},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="select" resultMap="sysUser">
+        select
+        <include refid="columns" />
+        from `sys_user`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null and id != ''">
+                and `id` = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and `username` = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                and `password` = #{password}
+            </if>
+            <if test="age != null and age != ''">
+                and `age` = #{age}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and `create_date` = #{createDate}
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                and `update_date` = #{updateDate}
+            </if>
+        </trim>
+    </select>
+</mapper>
